@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.myccnice</groupId>
+    <artifactId>practice-manual</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>Java Practice manual</name>
+    <description>Java修炼手册</description>
+    <!-- 定义包含的模块 -->
+    <modules>
+        <module>practice-manual-asm</module>
+        <module>practice-manual-concurrent</module>
+        <module>practice-manual-designpattern</module>
+        <module>practice-manual-proxy</module>
+        <module>practice-manual-leetcode</module>
+        <module>practice-manual-rmi</module>
+    </modules>
+    <!-- 占位符定义 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.12</junit.version>
+        <cglib.version>3.2.5</cglib.version>
+        <reflectasm.version>1.09</reflectasm.version>
+        <spring.version>3.2.18.RELEASE</spring.version>
+    </properties>
+    <!-- 统一管理依赖包 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.esotericsoftware.reflectasm</groupId>
+                <artifactId>reflectasm</artifactId>
+                <version>${reflectasm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
