@@ -18,6 +18,7 @@
         <module>practice-manual-leetcode</module>
         <module>practice-manual-rmi</module>
         <module>practice-manual-spi</module>
+        <module>practice-manual-qimen</module>
     </modules>
     <!-- 占位符定义 -->
     <properties>
@@ -25,7 +26,9 @@
         <junit.version>4.12</junit.version>
         <cglib.version>3.2.5</cglib.version>
         <reflectasm.version>1.09</reflectasm.version>
-        <spring.version>3.2.18.RELEASE</spring.version>
+        <spring.version>5.0.0.RELEASE</spring.version>
+        <spring.boot.version>1.5.10.RELEASE</spring.boot.version>
+        <fastjson.version>1.2.31</fastjson.version>
     </properties>
     <!-- 统一管理依赖包 -->
     <dependencyManagement>
@@ -49,6 +52,20 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <!-- https://github.com/spring-projects/spring-boot/blob/v1.5.10.RELEASE/spring-boot-dependencies/pom.xml -->
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
