@@ -19,6 +19,7 @@
         <module>practice-manual-rmi</module>
         <module>practice-manual-spi</module>
         <module>practice-manual-qimen</module>
+        <module>practice-manual-jvm</module>
     </modules>
     <!-- 占位符定义 -->
     <properties>
