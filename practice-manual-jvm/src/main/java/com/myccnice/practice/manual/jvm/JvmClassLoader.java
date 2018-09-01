@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.myccnice.practice.manual.jvm.natives.JvmNativeClass;
+
 /**
  * 类加载器
  *
@@ -28,9 +30,8 @@ public class JvmClassLoader {
         // 如果文件存在，加载文件字节码
         // 否则尝试通过虚拟机宿主加载指定类，并将加载后的类当做 native 类
         if(Files.exists(path)){
-            return null;
+            return JvmOpcodeClass.read(path);
         }
-        // TODO
-        return null;
+        return new JvmNativeClass(Class.forName(className.replace("/",".")));
     }
 }

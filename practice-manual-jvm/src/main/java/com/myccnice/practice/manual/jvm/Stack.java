@@ -55,4 +55,11 @@ public class Stack {
         this.running = running;
     }
 
+    public StackFrame currentFrame() {
+        return frames.pick();
+    }
+
+    public StackFrame popFrame(){
+        return frames.pop();
+    }
 }

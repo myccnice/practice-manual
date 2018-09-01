@@ -21,8 +21,9 @@ public interface JvmClass {
      * 获取属性
      * @param name 属性名
      * @param type 属性类型
+     * @param flags 访问控制标识 
      * @return
      * @throws NoSuchFieldException
      */
-    public Object getField(String name, String type) throws NoSuchFieldException, IllegalAccessException;
+    public Object getField(String name, String type, int flags) throws NoSuchFieldException, IllegalAccessException;
 }

@@ -56,68 +56,48 @@ public class StackFrame {
         this.operandStack = new SlotsStack<>(stackSize);
         this.localVariables = new Slots<>(variables);
     }
+    
+
     public Slots<Object> getLocalVariables() {
         return localVariables;
-    }
-
-    public void setLocalVariables(Slots<Object> localVariables) {
-        this.localVariables = localVariables;
     }
 
     public SlotsStack<Object> getOperandStack() {
         return operandStack;
     }
 
-    public void setOperandStack(SlotsStack<Object> operandStack) {
-        this.operandStack = operandStack;
-    }
-
-    public Opcode[] getOpcodes() {
-        return opcodes;
-    }
-
-    public void setOpcodes(Opcode[] opcodes) {
-        this.opcodes = opcodes;
-    }
-
-    public int getPc() {
-        return pc;
-    }
-
-    public void setPc(int pc) {
-        this.pc = pc;
-    }
-
     public ConstantPool getConstantPool() {
         return constantPool;
     }
 
-    public void setConstantPool(ConstantPool constantPool) {
-        this.constantPool = constantPool;
+    public void setPC(int pc) {
+        this.pc = pc;
     }
 
-    public Object getReturnVal() {
+    public void setReturn(Object returnVal, String returnType) {
+        this.isReturned = true;
+        this.returnVal = returnVal;
+        this.returnType = returnType;
+    }
+
+    public Object getReturn() {
         return returnVal;
     }
-
-    public void setReturnVal(Object returnVal) {
-        this.returnVal = returnVal;
-    }
-
     public String getReturnType() {
         return returnType;
-    }
-
-    public void setReturnType(String returnType) {
-        this.returnType = returnType;
     }
 
     public boolean isReturned() {
         return isReturned;
     }
 
-    public void setReturned(boolean isReturned) {
-        this.isReturned = isReturned;
+    public int getPC() {
+        return pc;
     }
-
+    public int increasePC(){
+        return pc++;
+    }
+    public Opcode[] getOpcodes() {
+        return opcodes;
+    }
 }

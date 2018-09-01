@@ -71,6 +71,7 @@ public class SlotsStack<T> {
      * 取出最后一个元素，但不出栈
      */
     public T pick(){
+        int end = this.end;
         while (end-- > 0) {
             T e = buffer[end];
             if (e != null) {
