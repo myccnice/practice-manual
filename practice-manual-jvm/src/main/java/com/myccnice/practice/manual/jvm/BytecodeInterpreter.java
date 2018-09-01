@@ -49,6 +49,11 @@ public class BytecodeInterpreter {
             if(OPCODES[code] == null){
                 throw new InternalError("The opcode "+Constants.OPCODE_NAMES[code]+" Not Impl");
             }
+            short noOfOperands = Constants.NO_OF_OPERANDS[code];
+            final OpcodeImpl opcode = OPCODES[code];
+            byte[] operands = Arrays.copyOfRange(codes, i + 1, i + 1 + noOfOperands);
+            opcodes.add( (Env env, StackFrame frame)->opcode.call(env, frame, operands) );
+            i += noOfOperands;
         }
         return Arrays.copyOf(opcodes.toArray(), opcodes.size(), Opcode[].class);
     }

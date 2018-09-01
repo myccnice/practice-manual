@@ -22,8 +22,8 @@ public class JvmOpcodeMethod implements JvmMethod {
     public JvmOpcodeMethod(ClassFile classFile, Method method) {
         this.classFile = classFile;
         this.method = method;
-        opcodes = BytecodeInterpreter.parseCodes(codeAttribute.code);
         codeAttribute = (Code_attribute)method.attributes.get("Code");
+        opcodes = BytecodeInterpreter.parseCodes(codeAttribute.code);
     }
 
     @Override

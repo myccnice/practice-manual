@@ -18,7 +18,7 @@ public class JvmNativeClass implements JvmClass {
     public JvmNativeClass(Class<?> nativeClass){
         this.nativeClass = nativeClass;
         for (Method method : this.nativeClass.getMethods()) {
-            String key = method.getName()+":"+Type.getMethodDescriptor(method);
+            String key = method.getName() + ":" + Type.getMethodDescriptor(method);
             methods.put(key, new JvmNativeMethod(method));
         }
     }
