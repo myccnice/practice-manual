@@ -48,8 +48,10 @@ public class JvmOpcodeMethod implements JvmMethod {
             locals.set(0, thiz, 1);
             pos++;
         }
-        for (Object arg : args) {
-            locals.set(pos++, arg, 1);
+        if (args != null && args.length > 0) {
+            for (Object arg : args) {
+                locals.set(pos++, arg, 1);
+            }
         }
         BytecodeInterpreter.run(env);
     }
