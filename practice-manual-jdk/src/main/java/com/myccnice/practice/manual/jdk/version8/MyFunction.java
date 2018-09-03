@@ -9,6 +9,7 @@ import java.util.Objects;
  *
  * create in 2018年9月3日
  * @author wangpeng
+ * @since 1.8
  */
 @FunctionalInterface
 public interface MyFunction<T, R> {
