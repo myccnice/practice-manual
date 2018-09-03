@@ -20,6 +20,7 @@
         <module>practice-manual-spi</module>
         <module>practice-manual-qimen</module>
         <module>practice-manual-jvm</module>
+        <module>practice-manual-jdk</module>
     </modules>
     <!-- 占位符定义 -->
     <properties>
