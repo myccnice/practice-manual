@@ -1,5 +1,7 @@
 package com.myccnice.practice.manual.leetcode.algorithm.tree;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import com.myccnice.practice.manual.leetcode.vo.TreeNode;
@@ -20,11 +22,17 @@ public class SearchTreeTest {
 
     @Test
     public void depthFirstSearch() {
-        SearchTree.depthFirstSearch(create());
+        List<TreeNode<String>> list = SearchTree.depthFirstSearch(create());
+        for (TreeNode<String> node : list) {
+            System.out.println(node.getValue());
+        }
     }
 
     @Test
     public void breadthFirstSearch() {
-        SearchTree.breadthFirstSearch(create());
+        List<TreeNode<String>> list = SearchTree.breadthFirstSearch(create());
+        for (TreeNode<String> node : list) {
+            System.out.println(node.getValue());
+        }
     }
 }

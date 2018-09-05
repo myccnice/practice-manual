@@ -1,6 +1,8 @@
 package com.myccnice.practice.manual.leetcode.algorithm.tree;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
@@ -21,15 +23,16 @@ public class SearchTree {
      * 父节点出栈时需要将其子节点从右至左依次入栈（先遍历左子树）
      * @author chengmi
      */
-    public static <T> void depthFirstSearch(TreeNode<T> root) {
+    public static <T> List<TreeNode<T>> depthFirstSearch(TreeNode<T> root) {
         if (root == null) {
-            return;
+            return Collections.emptyList();
         }
+        List<TreeNode<T>> list = new ArrayList<>();
         Stack<TreeNode<T>> stack = new Stack<>();
         stack.push(root);
         while(!stack.isEmpty()) {
             TreeNode<T> pop = stack.pop();
-            System.out.println(pop.getValue());
+            list.add(pop);
             List<TreeNode<T>> children = pop.getChildren();
             if (children != null) {
                 for (int i = children.size() -1; i >= 0; i--) {
@@ -37,6 +40,7 @@ public class SearchTree {
                 }
             }
         }
+        return list;
     }
 
     /**
@@ -45,19 +49,21 @@ public class SearchTree {
      * 广度优先遍历各个节点，需要使用到队列（Queue）这种数据结构，queue的特点是先进先出，
      * 其实也可以使用双端队列，区别就是双端队列首尾都可以插入和弹出节点。
      */
-    public static <T> void breadthFirstSearch(TreeNode<T> root) {
+    public static <T> List<TreeNode<T>> breadthFirstSearch(TreeNode<T> root) {
         if (root == null) {
-            return;
+            return Collections.emptyList();
         }
+        List<TreeNode<T>> list = new ArrayList<>();
         Deque<TreeNode<T>> queue = new ArrayDeque<>();
         queue.add(root);
         while(!queue.isEmpty()) {
             TreeNode<T> pop = queue.pop();
-            System.out.println(pop.getValue());
+            list.add(pop);
             List<TreeNode<T>> children = pop.getChildren();
             if (children != null) {
                 queue.addAll(children);
             }
         }
+        return list;
     }
 }
