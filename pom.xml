@@ -22,6 +22,7 @@
         <module>practice-manual-jvm</module>
         <module>practice-manual-jdk</module>
         <module>practice-manual-dubbo</module>
+        <module>practice-manual-mysql</module>
     </modules>
     <!-- 占位符定义 -->
     <properties>
