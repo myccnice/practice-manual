@@ -1,5 +1,7 @@
 package com.myccnice.practice.manual.leetcode.algorithm.tree;
 
+import com.myccnice.practice.manual.leetcode.vo.BinarySearchTreeNode;
+
 /**
  * 二叉树
  * 1）性质：
@@ -13,4 +15,16 @@ package com.myccnice.practice.manual.leetcode.algorithm.tree;
  */
 public class BinarySearchTree {
 
+    public static  void theFirstTraversal(BinarySearchTreeNode root) {
+        if (root == null) {
+            return;
+        }
+        System.out.println(root.getValue());
+        if (root.getLeftChild() != null) {
+            theFirstTraversal(root.getLeftChild());
+        }
+        if (root.getRightChild() != null) {
+            theFirstTraversal(root.getRightChild());
+        }
+    }
 }
