@@ -3,17 +3,17 @@ package com.myccnice.practice.manual.leetcode.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeNode<T> {
+public class NormalTreeNode<T> {
 
     private T value;
 
-    private List<TreeNode<T>> children;
+    private List<NormalTreeNode<T>> children;
 
-    public TreeNode() {
+    public NormalTreeNode() {
 
     }
 
-    public TreeNode(T value) {
+    public NormalTreeNode(T value) {
         super();
         this.value = value;
     }
@@ -26,15 +26,15 @@ public class TreeNode<T> {
         this.value = value;
     }
 
-    public List<TreeNode<T>> getChildren() {
+    public List<NormalTreeNode<T>> getChildren() {
         return children;
     }
 
-    public void setChildren(List<TreeNode<T>> children) {
+    public void setChildren(List<NormalTreeNode<T>> children) {
         this.children = children;
     }
 
-    public TreeNode<T> add(TreeNode<T> e) {
+    public NormalTreeNode<T> add(NormalTreeNode<T> e) {
         if (children == null) {
             children = new ArrayList<>();
         }

@@ -7,13 +7,13 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
-import com.myccnice.practice.manual.leetcode.vo.TreeNode;
+import com.myccnice.practice.manual.leetcode.vo.NormalTreeNode;
 
 /**
  * 遍历树的基本方法：1)深度优先、2)广度优先
  * @author chengmi
  */
-public class SearchTree {
+public class NormalSearchTree {
 
     /**
      * 深度优先:
@@ -23,17 +23,17 @@ public class SearchTree {
      * 父节点出栈时需要将其子节点从右至左依次入栈（先遍历左子树）
      * @author chengmi
      */
-    public static <T> List<TreeNode<T>> depthFirstSearch(TreeNode<T> root) {
+    public static <T> List<NormalTreeNode<T>> depthFirstSearch(NormalTreeNode<T> root) {
         if (root == null) {
             return Collections.emptyList();
         }
-        List<TreeNode<T>> list = new ArrayList<>();
-        Stack<TreeNode<T>> stack = new Stack<>();
+        List<NormalTreeNode<T>> list = new ArrayList<>();
+        Stack<NormalTreeNode<T>> stack = new Stack<>();
         stack.push(root);
         while(!stack.isEmpty()) {
-            TreeNode<T> pop = stack.pop();
+            NormalTreeNode<T> pop = stack.pop();
             list.add(pop);
-            List<TreeNode<T>> children = pop.getChildren();
+            List<NormalTreeNode<T>> children = pop.getChildren();
             if (children != null) {
                 for (int i = children.size() -1; i >= 0; i--) {
                     stack.push(children.get(i));
@@ -49,17 +49,17 @@ public class SearchTree {
      * 广度优先遍历各个节点，需要使用到队列（Queue）这种数据结构，queue的特点是先进先出，
      * 其实也可以使用双端队列，区别就是双端队列首尾都可以插入和弹出节点。
      */
-    public static <T> List<TreeNode<T>> breadthFirstSearch(TreeNode<T> root) {
+    public static <T> List<NormalTreeNode<T>> breadthFirstSearch(NormalTreeNode<T> root) {
         if (root == null) {
             return Collections.emptyList();
         }
-        List<TreeNode<T>> list = new ArrayList<>();
-        Deque<TreeNode<T>> queue = new ArrayDeque<>();
+        List<NormalTreeNode<T>> list = new ArrayList<>();
+        Deque<NormalTreeNode<T>> queue = new ArrayDeque<>();
         queue.add(root);
         while(!queue.isEmpty()) {
-            TreeNode<T> pop = queue.pop();
+            NormalTreeNode<T> pop = queue.pop();
             list.add(pop);
-            List<TreeNode<T>> children = pop.getChildren();
+            List<NormalTreeNode<T>> children = pop.getChildren();
             if (children != null) {
                 queue.addAll(children);
             }
