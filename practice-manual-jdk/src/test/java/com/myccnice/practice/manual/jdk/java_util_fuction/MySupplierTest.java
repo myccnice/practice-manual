@@ -1,4 +1,4 @@
-package com.myccnice.practice.manual.jdk.version8;
+package com.myccnice.practice.manual.jdk.java_util_fuction;
 
 import org.junit.Test;
 
