@@ -4,6 +4,7 @@
 # 由于apt官方库里的docker版本可能比较旧，所以先卸载可能存在的旧版本：
 $ sudo apt-get remove docker docker-engine docker-ce docker.io
 # 更新apt包索引：
+$ sudo apt-get upgarde
 $ sudo apt-get update
 # 安装以下包以使apt可以通过HTTPS使用存储库（repository）：
 $ sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
@@ -17,7 +18,7 @@ $ sudo apt-get update
 $ sudo apt-get install -y docker-ce
 # 在生产系统上，可能会需要应该安装一个特定版本的Docker CE，而不是总是使用最新版本：
 # 列出可用的版本：
-$ apt-cache madison docker-ce
+$ sudo apt-cache madison docker-ce
 # 选择要安装的特定版本，第二列是版本字符串，第三列是存储库名称，它指示包来自哪个存储库，以及扩展它的稳定性级别。
 # 要安装一个特定的版本，将版本字符串附加到包名中，并通过等号(=)分隔它们：
 $ sudo apt-get install docker-ce=<VERSION>
@@ -25,3 +26,11 @@ $ sudo apt-get install docker-ce=<VERSION>
 ## 验证docker
 # 经典的hello world：
 $ sudo docker run hello-world
+# 我的两个环境，有一个环境出现如下错误：Error response from daemon: Get https://index.docker.io/v1.....
+# 解决方法
+$ cd /etc/docker
+$ vi daemon.json
+# 写入以下内容：
+> {"registry-mirrors": ["https://registry.docker-cn.com"]}
+# >表示写入后面的内容，保存退出，重启docker服务
+$ service docker restart
