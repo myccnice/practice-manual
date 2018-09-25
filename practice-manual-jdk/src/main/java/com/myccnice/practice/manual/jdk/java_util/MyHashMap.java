@@ -117,7 +117,215 @@ public class MyHashMap<K, V> extends AbstractMap<K,V> implements Map<K,V>, Clone
 
     transient Set<Map.Entry<K,V>> entrySet;
 
+    /**
+     * 键值对的数量
+     */
     transient int size;
+
+    /**
+     * 键值对被修改的次数
+     */
+    transient int modCount;
+
+    int threshold;
+
+    /**
+     * 加载因子
+     */
+    final float loadFactor;
+
+    public MyHashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+        if (initialCapacity > MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+
+    public MyHashMap(int initialCapacity) {
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
+    }
+
+    public MyHashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+    }
+
+    public V get(Object key) {
+        Node<K, V> e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+
+    final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab = table;
+        int n = tab.length;
+        Node<K,V> first = tab[(n - 1) & hash];
+        Node<K,V> e = null;
+        K k;
+        if (tab != null && n > 0 && first != null) {
+            if (first.hash == hash && ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                do {
+                    if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+
+    public boolean containsKey(Object key) {
+        return getNode(hash(key), key) != null;
+    }
+
+    public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+    /**
+     * @param hash key的hash值
+     * @param key key
+     * @param value the value
+     * @param onlyIfAbsent 是否只在不存在时添加，如果是则原来的值将不会改变
+     * @param evict
+     * @return
+     */
+    final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
+        Node<K,V>[] tab; Node<K,V> p; int n, i;
+        if ((tab = table) == null || (n = tab.length) == 0)
+            n = (tab = resize()).length;
+        if ((p = tab[i = (n - 1) & hash]) == null) {
+            tab[i] = newNode(hash, key, value, null);
+        } else {
+            Node<K,V> e; K k;
+            if (p.hash == hash && ((k = p.key) == key || (key != null && key.equals(k))))
+                e = p;
+            else {
+                for (int binCount = 0; ; ++binCount) {
+                    // 如果链表的下个元素为空，则新建元素加入链表中
+                    if ((e = p.next) == null) {
+                        p.next = newNode(hash, key, value, null);
+                        break;
+                    }
+                    // 判断是否当前元素为插入元素
+                    if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k))))
+                        break;
+                    p = e;
+                }
+            }
+            // 该元素之前存在
+            if (e != null) {
+                V oldValue = e.value;
+                if (!onlyIfAbsent || oldValue == null)
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+        }
+        ++modCount;
+        if (++size > threshold)
+            resize();
+        afterNodeInsertion(evict);
+        return null;
+    }
+
+    final Node<K,V>[] resize() {
+        Node<K,V>[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        // 历史阀值
+        int oldThr = threshold;
+        // 新的容量
+        int newCap = 0;
+        // 新的阀值
+        int newThr = 0;
+        if (oldCap > 0) {
+            if (oldCap >= MAXIMUM_CAPACITY) {
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            }
+            // 每次扩容一倍
+            else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY && oldCap >= DEFAULT_INITIAL_CAPACITY) {
+                // 阀值也扩容一倍
+                newThr = oldThr << 1;
+            }
+        }
+        // 第一次创建数组，并指定了阀值
+        else if (oldThr > 0) {
+            // 新生成的容量和阀值一直
+            newCap = oldThr;
+        }
+        // 什么都没指定使用默认值
+        else {
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            // 扩容阀值是加载因子 * 容量
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        }
+        // 修正阀值
+        if (newThr == 0) {
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ? (int)ft : Integer.MAX_VALUE);
+        }
+        threshold = newThr;
+        @SuppressWarnings("unchecked")
+        Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) {
+            for (int j = 0; j < oldCap; ++j) {
+                Node<K,V> e;
+                if ((e = oldTab[j]) != null) {
+                    oldTab[j] = null;
+                    if (e.next == null)
+                        newTab[e.hash & (newCap - 1)] = e;
+                    else {
+                        Node<K,V> loHead = null, loTail = null;
+                        Node<K,V> hiHead = null, hiTail = null;
+                        Node<K,V> next;
+                        do {
+                            next = e.next;
+                            if ((e.hash & oldCap) == 0) {
+                                if (loTail == null)
+                                    loHead = e;
+                                else
+                                    loTail.next = e;
+                                loTail = e;
+                            }
+                            else {
+                                if (hiTail == null)
+                                    hiHead = e;
+                                else
+                                    hiTail.next = e;
+                                hiTail = e;
+                            }
+                        } while ((e = next) != null);
+                        if (loTail != null) {
+                            loTail.next = null;
+                            newTab[j] = loHead;
+                        }
+                        if (hiTail != null) {
+                            hiTail.next = null;
+                            newTab[j + oldCap] = hiHead;
+                        }
+                    }
+                }
+            }
+        }
+        return newTab;
+    }
+
+    Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
+        return new Node<>(hash, key, value, next);
+    }
+
+    // Callbacks to allow LinkedHashMap post-actions
+    void afterNodeAccess(Node<K,V> p) { }
+    void afterNodeInsertion(boolean evict) { }
+    void afterNodeRemoval(Node<K,V> p) { }
+
+    public int size() {
+        return size;
+    }
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
