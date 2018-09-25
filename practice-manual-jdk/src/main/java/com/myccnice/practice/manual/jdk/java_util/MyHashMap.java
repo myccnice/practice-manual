@@ -203,7 +203,7 @@ public class MyHashMap<K, V> extends AbstractMap<K,V> implements Map<K,V>, Clone
             if (p.hash == hash && ((k = p.key) == key || (key != null && key.equals(k))))
                 e = p;
             else {
-                for (int binCount = 0; ; ++binCount) {
+                for (; ;) {
                     // 如果链表的下个元素为空，则新建元素加入链表中
                     if ((e = p.next) == null) {
                         p.next = newNode(hash, key, value, null);
