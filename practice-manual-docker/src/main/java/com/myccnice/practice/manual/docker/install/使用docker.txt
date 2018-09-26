@@ -1,0 +1,3 @@
+# docker默认pull的镜像地址
+/var/lib/docker
+
