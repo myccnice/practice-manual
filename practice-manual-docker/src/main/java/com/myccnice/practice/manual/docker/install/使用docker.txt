@@ -1,3 +1,36 @@
-# docker默认pull的镜像地址
+1、 docker默认pull的镜像地址
 /var/lib/docker
 
+2、如何进入docker容器
+①:docker exec
+docker exec -it $CONTAINER_ID/$NAME /bin/sh
+注：其中的$CONTAINER_ID(容器id)、$NAME(容器名称)、$COMMAND(命令)对应
+  docker ps的CONTAINER ID、NAMES、COMMAND对应的值
+  /bin/bash(/bin/sh)的作用是因为docker后台必须运行一个进程，否则容器就会退出，在这里表示启动容器后启动bash。
+②:docker attach
+docker attach $CONTAINER_ID/$NAME
+注：attach有一个缺点，只要这个连接终止，或者使用了exit命令，容器就会退出后台运行
+
+3、容器的生命周期
+a、创建容器：使用docker run命令会启动一个容器，可以使用--name自定义名称，不自定义会随机生成一个。
+b、停止容器：使用docker stop id/name可以停止容器。
+c、启动容器：使用docker start id/name启动容器。
+d、删除容器：使用docker rm id/name
+e、容器列表：使用docker ps
+docker ps：列出当前所有正在运行的container
+docker ps -a：列出所有的containe
+
+4、创建镜像
+①:基于已有镜像的容器创建镜像
+$>docker commit -a wangpeng -m "new image" test_nginx nginx:myccnice
+注：test_nginx是容器名称；nginx:myccnice是新镜像的仓库:标签
+
+5、上传镜像到hub.docker.com
+a、先登录docker hub
+$>docker login #输入用户名、密码
+b、重命名镜像
+$>docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+注：其中SOURCE_IMAGE[:TAG]是本地镜像源；
+  TARGET_IMAGE[:TAG]是有要求的，必须是$username/$repositorie:$tag
+  $username是docker hub登录用户名
+  $repositorie:$tag是要上传的仓库名称和标签
