@@ -30,6 +30,7 @@ import com.taobao.api.response.AliexpressTradeRedefiningFindorderlistqueryRespon
  * create in 2018年3月19日
  * @author wangpeng
  */
+@SuppressWarnings("restriction")
 @Service("orderTestService")
 public class OrderTestService implements OrderService{
 
