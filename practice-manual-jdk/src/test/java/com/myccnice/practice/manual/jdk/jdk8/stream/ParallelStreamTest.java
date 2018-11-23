@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.toList;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.myccnice.practice.manual.jdk.jdk8.stream.vo.Parent;
 import com.myccnice.practice.manual.jdk.jdk8.stream.vo.Person;
 import com.myccnice.practice.manual.jdk.jdk8.stream.vo.Student;
 
@@ -18,6 +19,21 @@ import com.myccnice.practice.manual.jdk.jdk8.stream.vo.Student;
  * @date 2018年11月23日
  */
 public class ParallelStreamTest extends BaseTest {
+
+    @Test
+    public void filter() {
+        // 筛选出能够上学的小朋友，7岁上学
+        int ageOfSchool = 7;
+        // jdk8之前的方法
+        List<Person> beforeJdk8 = new ArrayList<>(persons.size());
+        for (Person person : persons) {
+            if (person.getAge() >= ageOfSchool) {
+                beforeJdk8.add(person);
+            }
+        }
+        List<Person> afterJdk8 = persons.stream().filter(p -> p.getAge() >= ageOfSchool).collect(toList());
+        Assert.assertEquals(beforeJdk8.size(), afterJdk8.size());
+    }
 
     @Test
     public void peek() {
@@ -38,5 +54,11 @@ public class ParallelStreamTest extends BaseTest {
         // Function<Person, Student> mapper = person -> Student.toStudent(person);
         List<Student> students = persons.parallelStream().map(Student::toStudent).collect(toList());
         Assert.assertEquals(persons.size(), students.size());
+    }
+
+    @Test
+    public void flatMap() {
+        List<Parent> parents = students.stream().flatMap(Student::toParents).collect(toList());
+        Assert.assertEquals(parents.size(), 2 * students.size());
     }
 }
