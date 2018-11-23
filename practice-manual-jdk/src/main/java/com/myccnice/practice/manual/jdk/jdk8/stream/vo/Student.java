@@ -20,4 +20,17 @@ public class Student extends Person {
         super(name, age);
         this.num = num;
     }
+
+    public static Student toStudent(Person person) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Student student = new Student();
+        student.setName(person.getName());
+        student.setAge(person.getAge());
+        student.setName(person.getName());
+        return student;
+    }
 }
