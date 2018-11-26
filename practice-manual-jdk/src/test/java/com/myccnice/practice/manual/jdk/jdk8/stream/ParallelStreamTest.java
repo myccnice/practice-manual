@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -63,5 +64,12 @@ public class ParallelStreamTest extends BaseTest {
         students.sort(Student::compareByScore);
         List<Parent> parents = students.stream().flatMap(Student::toParents).collect(toList());
         Assert.assertEquals(parents.size(), 2 * students.size());
+    }
+
+    @Test
+    public void reduce() {
+        // 统计学生的评价年龄
+        OptionalDouble average = students.stream().mapToInt(Student::getAge).average();
+        System.out.println(average.getAsDouble());
     }
 }
