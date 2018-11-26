@@ -52,7 +52,11 @@ public class Student extends Person {
         return student;
     }
 
-    public static Stream<Parent> toParents(Student s) {
-        return s.getParents();
+    public Stream<Parent> toParents() {
+        return this.getParents();
+    }
+
+    public int compareByScore(Student student){
+        return this.getAge() - student.getAge();
     }
 }

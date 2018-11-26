@@ -1,9 +1,10 @@
 package com.myccnice.practice.manual.jdk.jdk8.stream;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import static java.util.stream.Collectors.toList;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,6 +59,8 @@ public class ParallelStreamTest extends BaseTest {
 
     @Test
     public void flatMap() {
+        students.sort((o1, o2) -> o1.compareByScore(o2));
+        students.sort(Student::compareByScore);
         List<Parent> parents = students.stream().flatMap(Student::toParents).collect(toList());
         Assert.assertEquals(parents.size(), 2 * students.size());
     }
