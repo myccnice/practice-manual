@@ -23,7 +23,8 @@
         <module>practice-manual-mysql</module>
         <module>practice-manual-docker</module>
         <module>practice-manual-tool</module>
-    </modules>
+        <module>practice-manual-spring</module>
+  </modules>
     <!-- 占位符定义 -->
     <properties>
         <java.version>1.8</java.version>
