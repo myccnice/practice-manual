@@ -1,0 +1,12 @@
+# 注册信息实例
+dubbo://118.123.12.107:20001/com.sjdf.erp.common.facade.CacheFacade?
+anyhost=true&
+application=erp-warehouse&
+check=false&
+dubbo=2.5.3&
+interface=com.sjdf.erp.common.facade.CacheFacade&
+methods=hKeys,getObject,set&
+pid=1748&
+revision=1.0.0&
+side=consumer&
+timestamp=1542966201300
