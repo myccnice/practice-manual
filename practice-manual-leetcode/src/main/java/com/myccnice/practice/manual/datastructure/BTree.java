@@ -1,6 +1,23 @@
 package com.myccnice.practice.manual.datastructure;
 
-public class BTree<Key extends Comparable<Key>, Value> {
+/**
+ * 平衡多路查找树
+ * 为了描述B-Tree，首先定义一条记录为一个二元组[key, data] ，key为记录的键值，对应表中的主键值，data为一行记录中除主键外的数据。对于不同的记录，key值互不相同。
+ * 一棵m阶的B-Tree有如下特性： 那么这个 m 阶是怎么定义的呢？这里我们以一个节点能拥有的最大子节点数来表示这颗树的阶数。
+ * 举个例子，如果一个节点最多有 n 个key，那么这个节点最多就会有 n+1 个子节点，这棵树就叫做 n+1（m=n+1）阶树。
+ * 1. 每个节点最多有m个孩子。 
+ * 2. 除了根节点和叶子节点外，其它每个节点至少有Ceil(m/2)个孩子。 
+ * 3. 若根节点不是叶子节点，则至少有2个孩子 
+ * 4. 所有叶子节点都在同一层，且不包含其它关键字信息 
+ * 5. 每个非终端节点包含n个关键字信息（P0,P1,…Pn, k1,…kn） 
+ * 6. 关键字的个数n满足：ceil(m/2)-1 <= n <= m-1 
+ * 7. ki(i=1,…n)为关键字，且关键字升序排序。 
+ * 8. Pi(i=1,…n)为指向子树根节点的指针。P(i-1)指向的子树的所有节点关键字均小于ki，但都大于k(i-1)
+ *
+ * @author 王鹏
+ * @date 2018年12月6日
+ */
+public class BTree<Key extends Comparable<Key>, Data> {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
     private static final int M = 4;
@@ -10,27 +27,24 @@ public class BTree<Key extends Comparable<Key>, Value> {
     private int n;           // number of key-value pairs in the B-tree
 
     // helper B-tree node data type
-    private static final class Node 
-    {
-        private int m;                             // number of children
+    private static final class Node {
+        private int m;                             // 子节点个数
         private Entry[] children = new Entry[M];   // the array of children
 
         // create a node with k children
-        private Node(int k) 
-        {
+        private Node(int k) {
             m = k;
         }
     }
 
     // internal nodes: only use key and next
     // external nodes: only use key and value
-    private static class Entry 
-    {
+    // 内部节点只有key和next
+    private static class Entry {
         private Comparable key;
         private Object val;
         private Node next;     // helper field to iterate over array entries
-        public Entry(Comparable key, Object val, Node next) 
-        {
+        public Entry(Comparable key, Object val, Node next) {
             this.key  = key;
             this.val  = val;
             this.next = next;
@@ -40,8 +54,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
     /**
      * Initializes an empty B-tree.
      */
-    public BTree() 
-    {
+    public BTree()  {
         root = new Node(0);
     }
  
@@ -49,8 +62,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
      * Returns true if this symbol table is empty.
      * @return {@code true} if this symbol table is empty; {@code false} otherwise
      */
-    public boolean isEmpty() 
-    {
+    public boolean isEmpty() {
         return size() == 0;
     }
 
@@ -58,8 +70,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
      * Returns the number of key-value pairs in this symbol table.
      * @return the number of key-value pairs in this symbol table
      */
-    public int size() 
-    {
+    public int size() {
         return n;
     }
 
@@ -68,8 +79,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
      *
      * @return the height of this B-tree
      */
-    public int height() 
-    {
+    public int height() {
         return height;
     }
 
@@ -82,39 +92,26 @@ public class BTree<Key extends Comparable<Key>, Value> {
      *         and {@code null} if the key is not in the symbol table
      * @throws NullPointerException if {@code key} is {@code null}
      */
-    public Value get(Key key) 
-    {
-        if (key == null) 
-        {
+    public Data get(Key key) {
+        if (key == null){
             throw new NullPointerException("key must not be null");
         }
         return search(root, key, height);
     }
 
-    @SuppressWarnings("unchecked")
-    private Value search(Node x, Key key, int ht) 
-    {
+    private Data search(Node x, Key key, int ht) {
         Entry[] children = x.children;
 
-        // external node到最底层叶子结点，遍历
-        if (ht == 0) 
-        {
-            for (int j = 0; j < x.m; j++)             
-            {
-                if (eq(key, children[j].key)) 
-                {
-                    return (Value) children[j].val;
+        // 叶子节点
+        if (ht == 0) {
+            for (int j = 0; j < x.m; j++) {
+                if (eq(key, children[j].key)) {
+                    return (Data) children[j].val;
                 }
             }
-        }
-
-        // internal node递归查找next地址
-        else 
-        {
-            for (int j = 0; j < x.m; j++) 
-            {
-                if (j+1 == x.m || less(key, children[j+1].key))
-                {
+        } else  { // 非叶子节点
+            for (int j = 0; j < x.m; j++) {
+                if (j+1 == x.m || less(key, children[j+1].key)) {
                     return search(children[j].next, key, ht-1);
                 }
             }
@@ -132,7 +129,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
      * @param  val the value
      * @throws NullPointerException if {@code key} is {@code null}
      */
-    public void put(Key key, Value val) 
+    public void put(Key key, Data val) 
     {
         if (key == null) 
         {
@@ -153,7 +150,7 @@ public class BTree<Key extends Comparable<Key>, Value> {
         height++;
     }
 
-    private Node insert(Node h, Key key, Value val, int ht) 
+    private Node insert(Node h, Key key, Data val, int ht) 
     {
         int j;
         Entry t = new Entry(key, val, null);
@@ -255,13 +252,11 @@ public class BTree<Key extends Comparable<Key>, Value> {
 
 
     // comparison functions - make Comparable instead of Key to avoid casts
-    private boolean less(Comparable k1, Comparable k2) 
-    {
+    private boolean less(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) < 0;
     }
 
-    private boolean eq(Comparable k1, Comparable k2) 
-    {
+    private boolean eq(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) == 0;
     }
 
