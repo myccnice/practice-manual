@@ -24,8 +24,9 @@
         <module>practice-manual-docker</module>
         <module>practice-manual-tool</module>
         <module>practice-manual-spring</module>
-    <module>practice-manual-springmvczeroconfig</module>
-    <module>practice-manual-task</module>
+        <module>practice-manual-springmvczeroconfig</module>
+        <module>practice-manual-task</module>
+        <module>practice-manual-simulation-mybaties</module>
   </modules>
     <!-- 占位符定义 -->
     <properties>
@@ -34,7 +35,7 @@
         <junit.version>4.12</junit.version>
         <cglib.version>3.2.5</cglib.version>
         <reflectasm.version>1.09</reflectasm.version>
-        <spring.version>5.0.9.RELEASE</spring.version>
+        <spring.version>5.1.4.RELEASE</spring.version>
         <spring.boot.version>1.5.10.RELEASE</spring.boot.version>
         <fastjson.version>1.2.31</fastjson.version>
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
