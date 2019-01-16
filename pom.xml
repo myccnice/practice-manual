@@ -25,6 +25,7 @@
         <module>practice-manual-tool</module>
         <module>practice-manual-spring</module>
     <module>practice-manual-springmvczeroconfig</module>
+    <module>practice-manual-task</module>
   </modules>
     <!-- 占位符定义 -->
     <properties>
