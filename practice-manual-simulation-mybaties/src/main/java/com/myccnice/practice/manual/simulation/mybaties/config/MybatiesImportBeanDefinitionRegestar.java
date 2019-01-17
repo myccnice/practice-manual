@@ -2,6 +2,7 @@ package com.myccnice.practice.manual.simulation.mybaties.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -43,6 +44,7 @@ public class MybatiesImportBeanDefinitionRegestar implements ImportBeanDefinitio
             beanDefinition.getConstructorArgumentValues().addIndexedArgumentValue(0, clazz);
             registry.registerBeanDefinition(clazz.getSimpleName(), beanDefinition);
         }
+        Stream.of(registry.getBeanDefinitionNames()).forEach(t -> System.out.println(t));
     }
 
 }
