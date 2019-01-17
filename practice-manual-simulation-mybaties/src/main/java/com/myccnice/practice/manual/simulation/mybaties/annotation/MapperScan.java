@@ -7,11 +7,11 @@ import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-import com.myccnice.practice.manual.simulation.mybaties.config.MybatiesImportBeanDefinitionRegestar;
+import com.myccnice.practice.manual.simulation.mybaties.config.MapperScannerRegistrar;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(MybatiesImportBeanDefinitionRegestar.class)
+@Import(MapperScannerRegistrar.class)
 public @interface MapperScan {
 
     String[] value() default {};

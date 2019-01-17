@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 import com.myccnice.practice.manual.simulation.mybaties.annotation.MapperScan;
 import com.myccnice.practice.manual.simulation.mybaties.dao.CityDao;
 
-public class MybatiesImportBeanDefinitionRegestar implements ImportBeanDefinitionRegistrar {
+public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar {
 
     @Override
     public void registerBeanDefinitions(
