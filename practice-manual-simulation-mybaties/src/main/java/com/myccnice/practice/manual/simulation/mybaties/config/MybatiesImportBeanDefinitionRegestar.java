@@ -40,7 +40,7 @@ public class MybatiesImportBeanDefinitionRegestar implements ImportBeanDefinitio
             BeanDefinitionBuilder bdb = BeanDefinitionBuilder.genericBeanDefinition(clazz);
             AbstractBeanDefinition beanDefinition = bdb.getBeanDefinition();
             beanDefinition.setBeanClass(MybatiesFactoryBean.class);
-            // beanDefinition.setBeanClassName(clazz.getName());
+            beanDefinition.getConstructorArgumentValues().addIndexedArgumentValue(0, clazz);
             registry.registerBeanDefinition(clazz.getSimpleName(), beanDefinition);
         }
     }
