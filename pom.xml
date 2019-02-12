@@ -27,6 +27,7 @@
         <module>practice-manual-springmvczeroconfig</module>
         <module>practice-manual-task</module>
         <module>practice-manual-simulation-mybaties</module>
+    <module>practice-manual-lombok</module>
   </modules>
     <!-- 占位符定义 -->
     <properties>
