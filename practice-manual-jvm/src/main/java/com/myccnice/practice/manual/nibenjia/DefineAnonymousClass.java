@@ -14,16 +14,20 @@ import sun.misc.Unsafe;
 public class DefineAnonymousClass {
 
     public static void main(String args[]) throws Throwable {
-        Field f = Unsafe.class.getDeclaredField("theUnsafe");
-        f.setAccessible(true);
-        Unsafe unsafe = (Unsafe) f.get(null);
         String filePath = "E:/nibenjia/HelloWorld.class";
         byte[] buffer = getFileContent(filePath);
+        Unsafe unsafe = getUnsafe();
         Class<?> c1 = unsafe.defineAnonymousClass(UnsafeTest.class, buffer, null);
         System.out.println(c1.getName());
         Class<?> c2 = unsafe.defineAnonymousClass(UnsafeTest.class, buffer, null);
         System.out.println(c1 == c2);
         System.out.println(c2.getName());
+    }
+
+    private static Unsafe getUnsafe() throws Exception {
+        Field field = Unsafe.class.getDeclaredField("theUnsafe");
+        field.setAccessible(true);
+        return (Unsafe) field.get(null);
     }
 
     private static byte[] getFileContent(String filePath) {
