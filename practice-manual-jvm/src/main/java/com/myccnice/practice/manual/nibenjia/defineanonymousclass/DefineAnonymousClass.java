@@ -1,4 +1,4 @@
-package com.myccnice.practice.manual.nibenjia;
+package com.myccnice.practice.manual.nibenjia.defineanonymousclass;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
