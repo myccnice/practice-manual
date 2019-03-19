@@ -1,38 +1,27 @@
 package com.myccnice.practice.manual.dubbo;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+public class AppTest {
+
+    private ClassPathXmlApplicationContext context;
+
+    @Before
+    private void init() {
+        context = new ClassPathXmlApplicationContext(new String[] {"consumer.xml"});
+        context.start();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    protected <T> T getBean(Class<T> clazz) {
+        return context.getBean(clazz);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @After
+    private void destroy() {
+        if (context != null) {
+            context.close();
+        }
     }
 }

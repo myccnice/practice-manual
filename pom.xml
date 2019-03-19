@@ -29,6 +29,7 @@
         <module>practice-manual-simulation-mybaties</module>
     <module>practice-manual-lombok</module>
     <module>practice-manual-pdf</module>
+    <module>practice-manual-common</module>
   </modules>
     <!-- 占位符定义 -->
     <properties>
