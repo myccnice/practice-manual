@@ -9,7 +9,7 @@ public class AppTest {
     private ClassPathXmlApplicationContext context;
 
     @Before
-    private void init() {
+    public void init() {
         context = new ClassPathXmlApplicationContext(new String[] {"consumer.xml"});
         context.start();
     }
@@ -19,7 +19,7 @@ public class AppTest {
     }
 
     @After
-    private void destroy() {
+    public void destroy() {
         if (context != null) {
             context.close();
         }
