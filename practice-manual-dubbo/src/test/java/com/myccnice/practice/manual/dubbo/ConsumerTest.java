@@ -21,6 +21,5 @@ public class ConsumerTest extends AppTest {
             System.out.println(e.getClass());
             System.out.println("Exception");
         }
-        
     }
 }
