@@ -462,4 +462,15 @@ public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchron
         }
         return false;
     }
+
+    /**
+     * 判断是否有线程比当前线程等待更久的时间,这个一般用在公平锁中判断当前线程是否有获取锁的资格
+     */
+    public final boolean hasQueuedPredecessors() {
+        Node t = tail;
+        Node h = head;
+        Node s;
+        return h != t &&
+                ((s = h.next) == null || s.thread != Thread.currentThread());
+    }
 }
