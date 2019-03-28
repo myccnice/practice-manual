@@ -1,38 +1,48 @@
 package com.myccnice.practice.manual.redisson;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Test;
+
+import io.netty.util.HashedWheelTimer;
+import io.netty.util.Timeout;
+import io.netty.util.TimerTask;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+public class AppTest {
+
+    long internalLockLeaseTime = 30 * 1000;
+    int a = 0;
+    HashedWheelTimer timer = new HashedWheelTimer(Executors.defaultThreadFactory(), internalLockLeaseTime, TimeUnit.MILLISECONDS, 1024, false);
+
+    @Test
+    public void netty() {
+        timer = new HashedWheelTimer(10, TimeUnit.MILLISECONDS, 8);
+        System.out.println(Thread.currentThread().getName() + System.currentTimeMillis());
+        scheduleExpirationRenewal();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    private void scheduleExpirationRenewal() {
+        if (a > 5) {
+            return;
+        }
+        Timeout task = timer.newTimeout(new TimerTask() {
+            @Override
+            public void run(Timeout timeout) throws Exception {
+                a++;
+                System.out.println(Thread.currentThread().getName() + System.currentTimeMillis());
+            }
+        }, 10, TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(10 * 10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (a == 5) {
+            task.cancel();
+        }
     }
 }
