@@ -1,5 +1,8 @@
 package com.myccnice.practice.manual.redisson;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.xml.ws.RequestWrapper;
 
 import org.redisson.Redisson;
@@ -9,8 +12,11 @@ import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 
 public class App {
+
+    private static ExecutorService executorService = Executors.newFixedThreadPool(2 * Runtime.getRuntime().availableProcessors());
+
     @RequestWrapper
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws Exception {
         // 默认连接地址 127.0.0.1:6379
         // RedissonClient redisson = Redisson.create();
 
@@ -21,8 +27,20 @@ public class App {
         RedissonClient redisson = Redisson.create(config);
 
         RLock lock = redisson.getLock("anyLock");
-        // 最常见的使用方法
-        lock.lock();
+        if (!lock.tryLock()) {
+            return;
+        }
         lock.unlock();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (!lock.tryLock()) {
+                    return;
+                }
+                lock.unlock();
+            }
+        });
+        Thread.sleep(1000 * 60);
+        System.out.println();
     }
 }
