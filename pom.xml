@@ -29,6 +29,7 @@
         <module>practice-manual-lombok</module>
         <module>practice-manual-common</module>
         <module>practice-manual-redisson</module>
+        <module>practice-manual-namespace</module>
     </modules>
     <!-- 占位符定义 -->
     <properties>
