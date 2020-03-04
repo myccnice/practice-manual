@@ -1,4 +1,4 @@
-package com.myccnice.practice.manual.algorithm;
+package com.myccnice.practice.manual.leetcode.algorithm;
 
 public class No8 {
 
